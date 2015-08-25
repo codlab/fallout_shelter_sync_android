@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#284ee6</color>
+    <color name="colorPrimaryDark">#3c0ae6</color>
+    <color name="tabsScrollColor">#b7ae2b</color>
+    <color name="white">@android:color/white</color>
+
+</resources>
