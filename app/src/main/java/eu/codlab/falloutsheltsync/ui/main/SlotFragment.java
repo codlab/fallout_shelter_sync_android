@@ -86,7 +86,7 @@ public class SlotFragment extends Fragment {
     }
 
     private void refreshAdapter(List<Metadata> list, int slot) {
-        _recycler.setAdapter(new SlotAdapter(list, slot));
+        _recycler.setAdapter(new SlotAdapter(getActivity(), list, slot));
     }
 
     @Subscribe(threadMode = ThreadMode.MainThread, sticky = true)

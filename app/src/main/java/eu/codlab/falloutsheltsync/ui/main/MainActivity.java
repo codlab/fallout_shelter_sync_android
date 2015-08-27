@@ -15,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -123,20 +122,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     .addOnConnectionFailedListener(this)
                     .build();
         }
-
-        /*try {
-            CypherAES cypher = new CypherAES("tu89geji340t89u2",
-                    intArrayToByte(new int[]{0xa7, 0xca, 0x9f, 0x33, 0x66, 0xd8, 0x92, 0xc2, 0xf0, 0xbe, 0xf4, 0x17, 0x34, 0x1c,
-                            0xa9, 0x71, 0xb6, 0x9a, 0xe9, 0xf7, 0xba, 0xcc, 0xcf, 0xfc, 0xf4, 0x3c, 0x62, 0xd1, 0xd7,
-                            0xd0, 0x21, 0xf9}));
-            byte[] bytes = Base64Coder.decode(content.trim());
-            String result = new String(cypher.decrypt(bytes));
-            Log.d("MainActivity", result + "");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
-
     }
 
     @Override
@@ -215,7 +200,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onConnectionSuspended(int i) {
-        Toast.makeText(this, "onConnectionSuspended " + i, Toast.LENGTH_SHORT).show();
     }
 
     @Subscribe(threadMode = ThreadMode.MainThread, sticky = true)

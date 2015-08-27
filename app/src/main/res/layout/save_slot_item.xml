@@ -9,18 +9,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Save Date"
+        android:text="@string/saved_date"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
         android:id="@+id/download"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Download" />
+        android:text="@string/download" />
 
     <Button
         android:id="@+id/use"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Use" />
+        android:text="@string/use" />
 </LinearLayout>

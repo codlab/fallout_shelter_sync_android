@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!-- AUTO-GENERATED -->
+<string name="downloading">Téléchargement &#8230;</string>
+<string name="uploading">Téléversement &#8230;</string>
+<string name="saved_date">Date de sauvegarde</string>
+<string name="download">Télécharger</string>
+<string name="upload">Envoyer</string>
+<string name="use">Utiliser</string>
+<string name="current_save_on_device">Cette sauvegarde est celle présente actuellement sur votre appareil</string>
+<string name="app_name">Fallout Shelter Sync</string>
+<string name="update">Page de l\'application</string>
+<string name="codlab">Sites web</string>
+<string name="tab_slot_1">Slot 1</string>
+<string name="tab_slot_2">Slot 2</string>
+<string name="tab_slot_3">Slot 3</string>
+</resources>

@@ -1,7 +1,8 @@
 package eu.codlab.falloutsheltsync.ui.main;
 
+import android.app.Activity;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,10 @@ import eu.codlab.falloutsheltsync.sync.SyncService;
  * Created by kevinleperf on 24/08/15.
  */
 public class SlotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private final static String STORAGE = "android.permission.WRITE_EXTERNAL_STORAGE";
     private final static int LOCAL = 0;
     private final static int DISTANT = 1;
+    private final Activity _parent;
 
     public class LocalViewHolder extends RecyclerView.ViewHolder {
 
@@ -35,8 +38,13 @@ public class SlotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @OnClick(R.id.upload)
         public void onUploadClick() {
-            SyncService.getInstance().newFileContent(_slot_name, new DateTime());
-            Toast.makeText(_date.getContext(), "Uploading ... ", Toast.LENGTH_SHORT).show();
+
+            if (_parent != null && _parent.shouldShowRequestPermissionRationale(STORAGE)) {
+                _parent.requestPermissions(new String[]{STORAGE}, 42);
+            } else {
+                SyncService.getInstance().newFileContent(_slot_name, new DateTime());
+                Toast.makeText(_date.getContext(), R.string.uploading, Toast.LENGTH_SHORT).show();
+            }
         }
 
         public LocalViewHolder(ViewGroup group) {
@@ -66,16 +74,27 @@ public class SlotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @OnClick(R.id.download)
         public void onDownloadClick() {
-            if (_metadata != null && _metadata.getOriginalFilename() != null) {
-                SyncService.getInstance().readFileContent(_metadata.getOriginalFilename());
-                Toast.makeText(_date.getContext(), "Downloading ... ", Toast.LENGTH_SHORT).show();
+
+            if (Build.VERSION.SDK_INT >= 23
+                    && _parent != null && _parent.shouldShowRequestPermissionRationale(STORAGE)) {
+                _parent.requestPermissions(new String[]{STORAGE}, 42);
+            } else {
+                if (_metadata != null && _metadata.getOriginalFilename() != null) {
+                    SyncService.getInstance().readFileContent(_metadata.getOriginalFilename());
+                    Toast.makeText(_date.getContext(), R.string.downloading, Toast.LENGTH_SHORT).show();
+                }
             }
         }
 
         @OnClick(R.id.use)
-        public void onUseClick(){
-            if(_metadata != null && _metadata.getOriginalFilename() != null) {
-                SyncService.getInstance().copy(_metadata.getOriginalFilename(), _slot_name);
+        public void onUseClick() {
+            if (Build.VERSION.SDK_INT >= 23
+                    && _parent != null && _parent.shouldShowRequestPermissionRationale(STORAGE)) {
+                _parent.requestPermissions(new String[]{STORAGE}, 42);
+            } else {
+                if (_metadata != null && _metadata.getOriginalFilename() != null) {
+                    SyncService.getInstance().copy(_metadata.getOriginalFilename(), _slot_name);
+                }
             }
         }
 
@@ -97,7 +116,8 @@ public class SlotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private int _slot_name;
     private List<Metadata> _list;
 
-    public SlotAdapter(List<Metadata> list, int slot_name) {
+    public SlotAdapter(Activity parent, List<Metadata> list, int slot_name) {
+        _parent = parent;
         _list = list;
         _slot_name = slot_name;
     }

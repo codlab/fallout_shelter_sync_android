@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
@@ -53,7 +52,7 @@ import eu.codlab.falloutsheltsync.util.FileUtils;
  * Created by kevinleperf on 24/08/15.
  */
 public class SyncService extends Service {
-
+    private final static String VAULT_FORMAT = "/sdcard/Android/data/com.bethsoft.falloutshelter/files/Vault%d.sav";
     private static SyncService _instance;
 
     public static SyncService getInstance() {
@@ -119,7 +118,6 @@ public class SyncService extends Service {
                             data = buffer.get(i);
                             //TODO REGEXP
                             if (data.getTitle().endsWith(".fallout")) {
-                                Log.d("SyncService", "data :: " + data.getTitle());
                                 if (data.getTitle().indexOf("Vault1.") >= 0) {
                                     slot1.add(data);
                                 } else if (data.getTitle().indexOf("Vault2.") >= 0) {
@@ -176,12 +174,12 @@ public class SyncService extends Service {
     }
 
     public void newFileContent(final int slot, final DateTime date) {
-        File file = new File(String.format("/sdcard/Android/data/com.bethsoft.falloutshelter/files/Vault%d.sav", slot));
+        File file = new File(String.format(VAULT_FORMAT, slot));
         newFileContent(slot, date, readFileName(file.getAbsolutePath()));
     }
 
     public boolean exists(int slot) {
-        File file = new File(String.format("/sdcard/Android/data/com.bethsoft.falloutshelter/files/Vault%d.sav", slot));
+        File file = new File(String.format(VAULT_FORMAT, slot));
         return file.exists();
     }
 
@@ -199,7 +197,7 @@ public class SyncService extends Service {
     }
 
     public void copy(File origin, int slot) {
-        File file = new File(String.format("/sdcard/Android/data/com.bethsoft.falloutshelter/files/Vault%d.sav", slot));
+        File file = new File(String.format(VAULT_FORMAT, slot));
         FileUtils.copyFile(origin, file);
     }
 
@@ -293,15 +291,12 @@ public class SyncService extends Service {
                         + "." + ApplicationController.getInstance().getGuid() + ".fallout")
                 .setMimeType("text/plain").build();
 
-        Log.d("SyncService", "changeSet " + changeSet.getTitle() + " " + changeSet.getMimeType());
-
         // Create a file in the root folder
         Drive.DriveApi.getRootFolder(mGoogleApiClient)
                 .createFile(mGoogleApiClient, changeSet, result.getDriveContents())
                 .setResultCallback(new ResultCallback<DriveFolder.DriveFileResult>() {
                     @Override
                     public void onResult(DriveFolder.DriveFileResult driveFileResult) {
-                        Log.d("SyncService", "driveFileResult " + driveFileResult);
                         if (driveFileResult.getStatus().isSuccess()) {
                             listFiles();
                         }

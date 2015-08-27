@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cette sauvegarde est active sur votre appareil"
+        android:text="@string/current_save_on_device"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <LinearLayout
@@ -21,13 +21,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Save Date"
+            android:text="@string/saved_date"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Button
             android:id="@+id/upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Upload" />
+            android:text="@string/upload" />
     </LinearLayout>
 </LinearLayout>
