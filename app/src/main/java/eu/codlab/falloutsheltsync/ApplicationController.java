@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -39,6 +40,7 @@ public class ApplicationController extends Application {
         PRNGFixes.apply();
         _instance = this;
         Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Answers());
     }
 
     public static ApplicationController getInstance() {

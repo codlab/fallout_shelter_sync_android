@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.EventAttributes;
 import com.google.android.gms.drive.Metadata;
 
 import org.joda.time.DateTime;
@@ -42,8 +44,11 @@ public class SlotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (_parent != null && _parent.shouldShowRequestPermissionRationale(STORAGE)) {
                 _parent.requestPermissions(new String[]{STORAGE}, 42);
             } else {
-                SyncService.getInstance().newFileContent(_slot_name, new DateTime());
+                SyncService.getInstance().upload(_slot_name);
                 Toast.makeText(_date.getContext(), R.string.uploading, Toast.LENGTH_SHORT).show();
+                EventAttributes attributes = new EventAttributes();
+                attributes.put("Slot", _slot_name);
+                Answers.getInstance().logEvent("Upload", attributes);
             }
         }
 
@@ -82,6 +87,9 @@ public class SlotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if (_metadata != null && _metadata.getOriginalFilename() != null) {
                     SyncService.getInstance().readFileContent(_metadata.getOriginalFilename());
                     Toast.makeText(_date.getContext(), R.string.downloading, Toast.LENGTH_SHORT).show();
+                    EventAttributes attributes = new EventAttributes();
+                    attributes.put("Slot", _slot_name);
+                    Answers.getInstance().logEvent("Download", attributes);
                 }
             }
         }
@@ -94,6 +102,9 @@ public class SlotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             } else {
                 if (_metadata != null && _metadata.getOriginalFilename() != null) {
                     SyncService.getInstance().copy(_metadata.getOriginalFilename(), _slot_name);
+                    EventAttributes attributes = new EventAttributes();
+                    attributes.put("Slot", _slot_name);
+                    Answers.getInstance().logEvent("Use", attributes);
                 }
             }
         }

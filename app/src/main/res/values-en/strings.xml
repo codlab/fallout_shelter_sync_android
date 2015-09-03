@@ -14,4 +14,10 @@
 <string name="tab_slot_1">Slot 1</string>
 <string name="tab_slot_2">Slot 2</string>
 <string name="tab_slot_3">Slot 3</string>
+<string name="foreground_title">Fallout Shelter Synchronisation</string>
+<string name="foreground_text">Waiting for new save edited</string>
+<string name="upload_title">New save game ready to upload</string>
+<string name="upload_text">Send the save game to Google Drive ?</string>
+<string name="upload_cancel">Cancel</string>
+<string name="upload_upload">Upload</string>
 </resources>
